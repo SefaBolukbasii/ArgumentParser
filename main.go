@@ -14,24 +14,24 @@ const (
 )
 
 type Argument struct {
-	name         string
-	description  string
-	example      string
-	defaultValue *string
-	forced       bool
-	argumentType ArgumentType
+	Name         string
+	Description  string
+	Example      string
+	DefaultValue *string
+	Forced       bool
+	ArgumentType ArgumentType
 }
 
 var ArgumentsArray []Argument
 
 func AddArgument(com *Argument) {
 	ArgumentsArray = append(ArgumentsArray, Argument{
-		name:         com.name,
-		description:  com.description,
-		example:      com.example,
-		defaultValue: com.defaultValue,
-		forced:       com.forced,
-		argumentType: com.argumentType,
+		Name:         com.Name,
+		Description:  com.Description,
+		Example:      com.Example,
+		DefaultValue: com.DefaultValue,
+		Forced:       com.Forced,
+		ArgumentType: com.ArgumentType,
 	})
 }
 
@@ -47,28 +47,28 @@ func Parse() (map[string]any, error) {
 				}
 				return nil, nil
 			} else {
-				if args[i][2:] == Argument.name {
-					if Argument.argumentType == CommandType {
+				if args[i][2:] == Argument.Name {
+					if Argument.ArgumentType == CommandType {
 						if i+1 < len(args) {
 							if args[i+1][:1] == "-" {
-								if Argument.defaultValue != nil {
-									parsedArgs[Argument.name] = Argument.defaultValue
+								if Argument.DefaultValue != nil {
+									parsedArgs[Argument.Name] = Argument.DefaultValue
 								} else {
 									return nil, errors.New("yanlış kullanılmış")
 								}
 							} else {
-								parsedArgs[Argument.name] = args[i+1]
+								parsedArgs[Argument.Name] = args[i+1]
 							}
 							i++
 						} else {
-							if Argument.defaultValue != nil {
-								parsedArgs[Argument.name] = Argument.defaultValue
+							if Argument.DefaultValue != nil {
+								parsedArgs[Argument.Name] = Argument.DefaultValue
 							} else {
 								return nil, errors.New("yanlış kullanılmış")
 							}
 						}
 					} else {
-						parsedArgs[Argument.name] = true
+						parsedArgs[Argument.Name] = true
 					}
 					wrongCommand = false
 					break
@@ -77,12 +77,12 @@ func Parse() (map[string]any, error) {
 				}
 			}
 		}
-		if wrongCommand && Argument.forced {
+		if wrongCommand && Argument.Forced {
 			return nil, errors.New("komut zorunlu olarak kullanılmalı")
 		}
 	}
 	return parsedArgs, nil
 }
 func (arg *Argument) Help() {
-	fmt.Println(arg.name, "\n", arg.description, "\n", arg.example)
+	fmt.Println(arg.Name, "\n", arg.Description, "\n", arg.Example)
 }
