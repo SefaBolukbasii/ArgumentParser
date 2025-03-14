@@ -65,7 +65,9 @@ func Parse() (map[string]any, error) {
 							if Argument.DefaultValue != nil {
 								parsedArgs[Argument.Name] = Argument.DefaultValue
 							} else {
-								return nil, errors.New("yanlış kullanılmış")
+								Argument.Help()
+								return nil, nil
+
 							}
 						}
 					} else {
