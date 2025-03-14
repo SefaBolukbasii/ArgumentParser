@@ -52,9 +52,10 @@ func Parse() (map[string]any, error) {
 						if i+1 < len(args) {
 							if args[i+1][:1] == "-" {
 								if Argument.DefaultValue != nil {
-									parsedArgs[Argument.Name] = Argument.DefaultValue
+									parsedArgs[Argument.Name] = *Argument.DefaultValue
 								} else {
-									return nil, errors.New("yanlış kullanılmış")
+									Argument.Help()
+									return nil, nil
 								}
 							} else {
 								parsedArgs[Argument.Name] = args[i+1]
